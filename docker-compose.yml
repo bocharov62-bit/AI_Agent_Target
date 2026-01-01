@@ -1,0 +1,40 @@
+# Landing Redesign Assistant - Docker Compose
+# Run: docker-compose run agent https://example.com --role all
+
+version: '3.8'
+
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: landing-assistant
+    
+    # Environment variables from .env file
+    env_file:
+      - .env
+    
+    # Interactive mode support
+    stdin_open: true
+    tty: true
+    
+    # Mount output directory for saving results
+    volumes:
+      - ./output:/app/output
+    
+    # Override default command
+    # Usage: docker-compose run agent https://example.com --role ui
+    entrypoint: ["python", "agent.py"]
+
+  # Web interface (for future use)
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.web
+  #   container_name: landing-assistant-web
+  #   ports:
+  #     - "8000:8000"
+  #   env_file:
+  #     - .env
+  #   command: ["uvicorn", "web.app:app", "--host", "0.0.0.0", "--port", "8000"]
+
