@@ -1,0 +1,48 @@
+# Landing Redesign Assistant - Web Interface
+# Docker image for web application
+
+FROM python:3.12-slim
+
+# Metadata
+LABEL maintainer="Bocharov62"
+LABEL description="Landing Redesign Assistant - Web Interface"
+LABEL version="1.0"
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONIOENCODING=utf-8
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (for Docker cache optimization)
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Create output directory
+RUN mkdir -p /app/output && \
+    chmod 777 /app/output
+
+# Create non-root user for security
+RUN useradd --create-home --shell /bin/bash appuser && \
+    chown -R appuser:appuser /app
+USER appuser
+
+# Expose port
+EXPOSE 8000
+
+# Default command (Web mode)
+CMD ["python", "run_web.py", "--host", "0.0.0.0", "--port", "8000"]
+

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Redesign Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Landing Redesign Assistant</h1>
+            <p class="subtitle">AI-агент для анализа лендингов</p>
+            <p class="powered-by">Powered by GigaChat</p>
+        </header>
+
+        <main>
+            <form action="/analyze" method="post" class="analysis-form">
+                <div class="form-group">
+                    <label for="url">URL лендинга для анализа:</label>
+                    <input 
+                        type="text" 
+                        id="url" 
+                        name="url" 
+                        placeholder="https://example.com" 
+                        required
+                        class="url-input"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Выберите модуль анализа:</label>
+                    <div class="role-selector">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="ui" checked>
+                            <div class="role-card">
+                                <h3>🎨 UI-дизайнер</h3>
+                                <p>Анализ дизайна и структуры</p>
+                                <span class="badge free">Бесплатно</span>
+                            </div>
+                        </label>
+
+                        <label class="role-option">
+                            <input type="radio" name="role" value="content">
+                            <div class="role-card">
+                                <h3>📝 Контент-менеджер</h3>
+                                <p>Анализ текстов и копирайтинга</p>
+                                <span class="badge free">Бесплатно</span>
+                            </div>
+                        </label>
+
+                        <label class="role-option">
+                            <input type="radio" name="role" value="all">
+                            <div class="role-card">
+                                <h3>🔍 Комплексный анализ</h3>
+                                <p>Оба модуля</p>
+                                <span class="badge free">Бесплатно</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span>Анализировать</span>
+                </button>
+            </form>
+        </main>
+
+        <footer>
+            <p>© 2026 Landing Redesign Assistant</p>
+        </footer>
+    </div>
+</body>
+</html>
+
