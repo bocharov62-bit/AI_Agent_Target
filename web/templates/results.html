@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты анализа - Landing Redesign Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Результаты анализа</h1>
+            <p class="subtitle">Анализ завершён успешно</p>
+        </header>
+
+        <main>
+            <div class="results-header">
+                <div class="info-card">
+                    <h3>Анализируемый URL</h3>
+                    <p class="url-display">{{ url }}</p>
+                </div>
+                <div class="info-card">
+                    <h3>Модулей анализа</h3>
+                    <p class="count">{{ results|length }}</p>
+                </div>
+                <div class="info-card">
+                    <h3>Всего рекомендаций</h3>
+                    <p class="count">{{ total_recommendations }}</p>
+                </div>
+            </div>
+
+            {% for result in results %}
+            <section class="analysis-result">
+                <div class="result-header">
+                    <h2>{{ result.module_name }}</h2>
+                    <p class="description">{{ result.module_description }}</p>
+                </div>
+
+                <div class="recommendations">
+                    {% for rec in result.recommendations %}
+                    <div class="recommendation">
+                        <div class="rec-number">{{ rec.number }}</div>
+                        <div class="rec-content">
+                            <h3>{{ rec.title }}</h3>
+                            <p>{{ rec.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endfor %}
+
+            <div class="actions">
+                <form action="/download" method="post" style="display: inline;">
+                    <input type="hidden" name="url" value="{{ url }}">
+                    <input type="hidden" name="role" value="{% if results|length == 2 %}all{% elif results[0].module_name == 'UI-дизайнер' %}ui{% else %}content{% endif %}">
+                    <button type="submit" class="btn-secondary">
+                        📥 Скачать результаты (TXT)
+                    </button>
+                </form>
+                <a href="/" class="btn-primary">🔄 Новый анализ</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2026 Landing Redesign Assistant</p>
+        </footer>
+    </div>
+</body>
+</html>
+

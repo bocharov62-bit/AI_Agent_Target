@@ -1,0 +1,35 @@
+# Landing Redesign Assistant - Production Docker Compose
+# Для работы 24/7 на сервере
+
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: landing-assistant-web
+    restart: unless-stopped  # Автоматический перезапуск при падении
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./output:/app/output
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8000/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - landing-network
+
+networks:
+  landing-network:
+    driver: bridge

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка - Landing Redesign Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>❌ Ошибка</h1>
+        </header>
+
+        <main>
+            <div class="error-message">
+                <div class="error-icon">⚠️</div>
+                <h2>Произошла ошибка</h2>
+                <p class="error-details">{{ error }}</p>
+                <div class="error-help">
+                    <h3>Что делать?</h3>
+                    <ul>
+                        <li>Проверьте правильность URL</li>
+                        <li>Убедитесь, что сайт доступен и не требует авторизации</li>
+                        <li>Некоторые сайты блокируют автоматические запросы - попробуйте другой сайт</li>
+                        <li>Проверьте интернет-соединение</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a href="/" class="btn-primary">🔄 Вернуться на главную</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2026 Landing Redesign Assistant</p>
+        </footer>
+    </div>
+</body>
+</html>
+

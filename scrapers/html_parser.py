@@ -48,11 +48,16 @@ class HTMLParser(BaseScraper):
         """Создать HTTP-сессию с настроенными заголовками."""
         session = requests.Session()
         session.headers.update({
-            "User-Agent": self.user_agent,
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
             "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "none",
+            "Cache-Control": "max-age=0",
         })
         return session
     
@@ -96,10 +101,16 @@ class HTMLParser(BaseScraper):
                 url=url
             )
         except requests.exceptions.HTTPError as e:
-            raise ScraperError(
-                f"HTTP ошибка: {e.response.status_code}", 
-                url=url
-            )
+            status_code = e.response.status_code
+            error_messages = {
+                401: "Сайт требует авторизации или блокирует автоматические запросы (401 Unauthorized)",
+                403: "Доступ запрещён - сайт блокирует запросы (403 Forbidden)",
+                404: "Страница не найдена (404 Not Found)",
+                500: "Внутренняя ошибка сервера (500)",
+                503: "Сервис временно недоступен (503 Service Unavailable)"
+            }
+            message = error_messages.get(status_code, f"HTTP ошибка: {status_code}")
+            raise ScraperError(message, url=url)
         except requests.exceptions.RequestException as e:
             raise ScraperError(str(e), url=url)
     

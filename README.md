@@ -63,9 +63,24 @@ copy .env.example .env
 
 ### Docker установка
 
+**Использование готового образа:**
+```bash
+# CLI режим
+docker run --rm --env-file .env \
+  ghcr.io/bocharov62-bit/ai_agent_target:latest \
+  https://example.com --role all
+
+# Веб-интерфейс
+docker run -d -p 8000:8000 --env-file .env \
+  ghcr.io/bocharov62-bit/ai_agent_target:web-latest
+```
+
+**Локальная сборка:**
 ```bash
 docker build -t landing-assistant .
 ```
+
+**Подробнее:** См. [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
 
 ## Использование
 
@@ -169,6 +184,22 @@ MIT License
 ## Автор
 
 **Bocharov62**
+
+---
+
+## 🐳 Docker образы
+
+Образы автоматически публикуются в GitHub Container Registry:
+
+- **CLI:** `ghcr.io/bocharov62-bit/ai_agent_target:latest`
+- **Web:** `ghcr.io/bocharov62-bit/ai_agent_target:web-latest`
+
+Подробная инструкция: [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
+
+## 📚 Документация
+
+- [USER_GUIDE.md](USER_GUIDE.md) - Руководство пользователя
+- [DOCKER_GUIDE.md](DOCKER_GUIDE.md) - Docker инструкции
 
 ---
 
