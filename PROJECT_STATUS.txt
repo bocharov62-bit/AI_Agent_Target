@@ -68,7 +68,7 @@
   ✅ Docker контейнер запущен и работает
   ✅ Nginx настроен как reverse proxy
   ✅ Автоматический перезапуск (restart: unless-stopped)
-  ✅ Сервис доступен: http://195.133.49.126
+  ✅ Сервис доступен: https://195.133.49.126 (HTTPS с SSL сертификатом)
 
 ✅ ЭТАП 8: CI/CD
   ✅ GitHub Actions workflow (.github/workflows/docker-publish.yml)

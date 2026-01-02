@@ -67,7 +67,13 @@ if docker-compose -f docker-compose.prod.yml ps | grep -q "Up"; then
     echo "✅ Сервис успешно запущен!"
     echo ""
     echo "=== Информация ==="
-    echo "Веб-интерфейс: http://$(hostname -I | awk '{print $1}'):8000"
+    SERVER_IP=$(hostname -I | awk '{print $1}')
+    if systemctl is-active --quiet nginx 2>/dev/null; then
+        echo "Веб-интерфейс: https://$SERVER_IP"
+        echo "  (Если HTTPS не настроен, используйте http://$SERVER_IP:8000)"
+    else
+        echo "Веб-интерфейс: http://$SERVER_IP:8000"
+    fi
     echo ""
     echo "Полезные команды:"
     echo "  Просмотр логов: docker-compose -f docker-compose.prod.yml logs -f"
